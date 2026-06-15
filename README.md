@@ -36,7 +36,20 @@ test/              # Integration tests
 ### Prerequisites
 
 - Go 1.24+
-- MySQL 5.7+
+- Docker & Docker Compose
+
+### Docker Setup
+
+Start MySQL using Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+This will start a MySQL 8.4 container with:
+- Database: `ntuc`
+- Root password: `password`
+- Port: `3306`
 
 ### Environment Variables
 
@@ -53,13 +66,11 @@ export JWT_SECRET="your-secret-key"
 go mod download
 ```
 
-### Database Setup
+### Database Migrations
+
+Run migrations:
 
 ```bash
-# Create database
-mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS ntuc;"
-
-# Run migrations
 migrate -path migrations -database "mysql://root:password@tcp(localhost:3306)/ntuc?parseTime=true" up
 ```
 
